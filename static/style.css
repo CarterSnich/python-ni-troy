@@ -1,0 +1,124 @@
+* {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+body {
+  display: grid;
+  place-content: center;
+  height: 100vh;
+}
+
+button,
+a#signin,
+a#signup {
+  padding: 0.25rem;
+  outline: none;
+
+  border-radius: 0.25rem;
+  border: 1px solid grey;
+  background-color: #e9e9ed;
+
+  transition: translate ease-in-out 300ms;
+}
+
+a#signin,
+a#signup {
+  color: black;
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  font-size: x-large;
+  text-decoration: none;
+  padding-bottom: 0.25rem;
+}
+
+button:hover,
+a#signin:hover,
+a#signup:hover {
+  background-color: #d0d0d7;
+}
+
+.flashes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  row-gap: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+.flash,
+.flash.message {
+  border: 1px solid grey;
+  background-color: rgba(128, 128, 128, 0.25);
+  padding: 1rem;
+  border-radius: 0.25rem;
+}
+
+.flash.warning {
+  border-color: yellow;
+  background-color: rgba(255, 255, 0, 0.25);
+}
+
+.flash.error {
+  border-color: red;
+  background-color: rgba(255, 0, 0, 0.25);
+}
+
+form {
+  min-width: 360px;
+  border: 1px solid grey;
+  border-radius: 0.25rem;
+}
+
+form h1 {
+  margin: 0;
+  text-align: center;
+  margin-bottom: 0.75rem;
+}
+
+form > div {
+  padding: 1rem;
+  display: grid;
+  row-gap: 0.5rem;
+}
+
+form > div > small {
+  margin-top: -0.5rem;
+}
+
+form .form-group {
+  border: 1px solid grey;
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+
+  display: grid;
+  row-gap: 0.25rem;
+  transition: all ease-in-out 300ms;
+}
+
+form .form-group.invalid {
+  border-color: red !important;
+}
+
+form .form-group:focus-within,
+form .form-group:focus-within:focus-within {
+  border: 1px solid black;
+}
+
+form .form-group > label {
+  font-size: small;
+  /* font-weight: 600; */
+}
+
+form .form-group > input {
+  border: none;
+  outline: none;
+  font-size: large;
+}

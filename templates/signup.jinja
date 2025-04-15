@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Index</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+
+<body>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <ul class="flashes">
+    {% for category, message in messages %}
+    <li class="flash {{ category }}">
+      {{ message }}
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% endwith %}
+
+
+  <form action="/signup" method="POST">
+    {{ form.csrf_token }}
+
+    <div>
+      <h1>Sign up</h1>
+
+      <div class="form-group {% if form.name.errors %} invalid {% endif %}">
+        {{ form.name.label }}
+        {{ form.name() }}
+      </div>
+      {% if form.name.errors %}
+      <small>{{ form.name.errors[0] }} </small>
+      {% endif %}
+
+      <div class="form-group {% if form.email.errors %} invalid {% endif %}">
+        {{ form.email.label }}
+        {{ form.email() }}
+      </div>
+      {% if form.email.errors %}
+      <small>{{ form.email.errors[0] }} </small>
+      {% endif %}
+
+      <div class="form-group {% if form.address.errors %} invalid {% endif %}">
+        {{ form.address.label }}
+        {{ form.address() }}
+      </div>
+      {% if form.address.errors %}
+      <small>{{ form.address.errors[0] }} </small>
+      {% endif %}
+
+      <div class="form-group {% if form.username.errors %} invalid {% endif %}">
+        {{ form.username.label }}
+        {{ form.username() }}
+      </div>
+      {% if form.username.errors %}
+      <small>{{ form.username.errors[0] }} </small>
+      {% endif %}
+
+      <div class="form-group {% if form.password.errors %} invalid {% endif %}">
+        {{ form.password.label }}
+        {{ form.password() }}
+      </div>
+      {% if form.password.errors %}
+      <small>{{ form.password.errors[0] }} </small>
+      {% endif %}
+
+      <button type="submit">Sign up</button>
+    </div>
+  </form>
+  <small>Already have an account?<a href="signin">Sign in</a> instead.</small>
+
+</body>
+
+</html>

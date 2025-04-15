@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Index</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+
+  <style>
+    p {
+      text-align: center;
+    }
+
+    main {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    a {
+      white-space: nowrap;
+      color: black;
+      display: block;
+      width: 100%;
+      text-align: center;
+      font-weight: bold;
+      font-size: x-large;
+      text-decoration: none;
+
+      padding: .5rem 1.25rem;
+      outline: none;
+
+      border-radius: 0.25rem;
+      border: 1px solid grey;
+      background-color: #e9e9ed;
+
+      transition: translate ease-in-out 300ms;
+    }
+
+    a:hover {
+      background-color: #d0d0d7;
+    }
+  </style>
+</head>
+
+<body>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  <ul class="flashes">
+    {% if messages %}
+    {% for category, message in messages %}
+    <li class="flash {{ category }}">
+      {{ message }}
+    </li>
+    {% endfor %}
+    {% else %}
+    <li class="flash ">
+      You are currently not signed in.
+    </li>
+    {% endif %}
+  </ul>
+  {% endwith %}
+
+  <main>
+    <a href="/signin">Sign in</a>
+    <a href="/signup">Sign up</a>
+  </main>
+
+</body>
+
+</html>
