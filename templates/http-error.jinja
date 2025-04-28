@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Error {{ code }}: {{ name }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+
+  <style>
+    div {
+      width: 600px;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <h1>Error {{ code }}: {{ name }}</h1>
+    <p>
+      {{ description }}
+      <a href="/">Go to index.</a>
+    </p>
+  </div>
+</body>
+
+</html>

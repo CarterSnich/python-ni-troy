@@ -22,7 +22,11 @@ class SignUpForm(FlaskForm):
     name = StringField(label="Name", id="name", validators=[DataRequired()])
     email = EmailField(label="Email", id="email", validators=[DataRequired()])
     address = StringField(label="Address", id="address", validators=[DataRequired()])
-    username = StringField(label="Username", id="username", validators=[DataRequired()])
+    username = StringField(
+        label="Username",
+        id="username",
+        validators=[DataRequired()],
+    )
     password = PasswordField(
         label="Password",
         id="password",
@@ -31,7 +35,12 @@ class SignUpForm(FlaskForm):
 
 
 class SignInForm(FlaskForm):
-    username = StringField(label="Username", id="username", validators=[DataRequired()])
+    username = StringField(
+        label="Username",
+        id="username",
+        # render_kw={"autocomplete": "off"},
+        validators=[DataRequired()],
+    )
     password = PasswordField(
         label="Password", id="password", validators=[DataRequired()]
     )

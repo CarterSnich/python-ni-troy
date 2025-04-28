@@ -18,6 +18,10 @@
       place-content: center;
     }
 
+    main {
+      width: 600px;
+    }
+
     p {
       font-size: xx-large;
     }
@@ -33,8 +37,10 @@
 </head>
 
 <body>
-  <p>Welcome!<br><br> {{ haiku}}</p>
-  <small>Refresh the page to check other haikus. Click <a href="signout">here</a> to sign out.</small>
+  <main>
+    <p>Welcome!<br><br> {{ haiku}}</p>
+    <small><a href="">Refresh</a> the page to check other haikus. Click <a href="signout">here</a> to sign out.</small>
+  </main>
 </body>
 
 </html>

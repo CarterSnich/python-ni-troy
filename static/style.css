@@ -13,9 +13,7 @@ body {
   height: 100vh;
 }
 
-button,
-a#signin,
-a#signup {
+button {
   padding: 0.25rem;
   outline: none;
 
@@ -23,24 +21,10 @@ a#signup {
   border: 1px solid grey;
   background-color: #e9e9ed;
 
-  transition: translate ease-in-out 300ms;
+  transition: background-color ease-in-out 300ms;
 }
 
-a#signin,
-a#signup {
-  color: black;
-  display: block;
-  width: 100%;
-  text-align: center;
-  font-weight: bold;
-  font-size: x-large;
-  text-decoration: none;
-  padding-bottom: 0.25rem;
-}
-
-button:hover,
-a#signin:hover,
-a#signup:hover {
+button:hover {
   background-color: #d0d0d7;
 }
 
@@ -100,7 +84,7 @@ form .form-group {
 
   display: grid;
   row-gap: 0.25rem;
-  transition: all ease-in-out 300ms;
+  transition: border ease-in-out 300ms;
 }
 
 form .form-group.invalid {
