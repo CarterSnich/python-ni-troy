@@ -1,42 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Index</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='style.css') }}"
-    />
-  </head>
 
-  <body>
-    {% with messages = get_flashed_messages(with_categories=true) %} {% if
-    messages %}
-    <ul class="flashes">
-      {% for category, message in messages %}
-      <li class="flash {{ category }}">
-        {{ message }}
-      </li>
-      {% endfor %}
-    </ul>
-    {% endif %} {% endwith %}
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Index</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='form.css') }}" />
+  <style>
+    body {
+      display: grid;
+      place-content: center;
+    }
+  </style>
+</head>
 
-    <form action="/" method="POST">
-      {{ form.csrf_token }}
+<body>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <ul class="flashes">
+    {% for category, message in messages %}
+    <li class="flash {{ category }}">
+      {{ message }}
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% endwith %}
 
-      <div>
-        <h1>Sign in</h1>
-        <div class="form-group">
-          {{ form.username.label }} {{ form.username() }}
-        </div>
-        <div class="form-group">
-          {{ form.password.label }}
-          {{ form.password() }}
-        </div>
-        <button type="submit">Sign in</button>
+  <form action="/" method="POST">
+    {{ form.csrf_token }}
+
+    <div>
+      <h1>Sign in</h1>
+      <div class="form-group">
+        {{ form.username.label }} {{ form.username() }}
       </div>
-    </form>
-    <small><a href="signup">Sign up</a> for an account.</small>
-  </body>
+      <div class="form-group">
+        {{ form.password.label }}
+        {{ form.password() }}
+      </div>
+      <button type="submit">Sign in</button>
+    </div>
+  </form>
+  <small><a href="signup">Sign up</a> for an account.</small>
+</body>
+
 </html>

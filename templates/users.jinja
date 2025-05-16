@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Users</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='form.css') }}" />
+
+  <style>
+    body {
+      display: flex;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    table {
+      display: block;
+      width: 100%;
+      border-radius: 0.25rem;
+    }
+
+    #header {
+      display: flex;
+      align-items: center;
+      padding: .5rem 1rem;
+      border-bottom: 2px solid grey;
+    }
+
+    #header>span {
+      margin-right: auto;
+    }
+
+    #header>button {
+      padding-inline: .5rem;
+      margin-inline: .25rem;
+    }
+
+    table thead {
+      position: sticky;
+      top: 0;
+      background-color: white;
+    }
+
+    table thead,
+    table tbody {
+      display: block;
+    }
+
+    table th,
+    table td {
+      display: flex;
+      justify-content: center;
+      flex: 1;
+    }
+
+    table thead th {
+      padding-block: 0.5rem;
+    }
+
+    table tbody tr {
+      padding: 0.25rem;
+    }
+
+    table tbody {
+      padding-bottom: 1rem;
+    }
+
+    table tr {
+      display: flex;
+    }
+
+    table thead {
+      border-bottom: 2px solid grey;
+    }
+
+    table tbody tr {
+      border-block: 1px solid grey;
+      margin-block: -1px;
+    }
+
+    td input {
+      flex-grow: 1;
+      display: none;
+    }
+
+    td span {
+      text-align: center;
+    }
+
+    td.edit span {
+      display: none;
+    }
+
+    td.edit input {
+      display: block !important;
+    }
+
+    dialog {
+      border: none;
+      background-color: transparent;
+    }
+
+    dialog::backdrop {
+      background-color: rgba(0, 0, 0, 0.75);
+
+    }
+
+    dialog form {
+      background-color: white;
+      border: 4px solid grey;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <table>
+      <thead>
+        <tr>
+          <th colspan="6" id="header">
+            <span>Logged in as {{ user.username }}</span>
+            <button id="open-dialog-button" type="button">Add</button>
+            <button id="signout-button">Sign out</button>
+          </th>
+        </tr>
+        <tr>
+          <th>Username</th>
+          <th>Password</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Address</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          <td>
+            <span>{{ user.username }}</span>
+            <input type="text" value="{{ user.username }}" name="username" form="update-form" disabled
+              data-user-id="{{ user.id }}" />
+          </td>
+          <td>
+            <span>********</span>
+            <input type="text" name="password" form="update-form" disabled data-user-id="{{ user.id }}" />
+          </td>
+          <td>
+            <span>{{ user.name }}</span>
+            <input type="text" value="{{ user.name }}" name="name" form="update-form" disabled
+              data-user-id="{{ user.id }}" />
+          </td>
+          <td>
+            <span>{{ user.email }}</span>
+            <input type="text" value="{{ user.email }}" name="email" form="update-form" disabled
+              data-user-id="{{ user.id }}" />
+          </td>
+          <td>
+            <span>{{ user.address }}</span>
+            <input type="text" value="{{ user.address }}" name="address" form="update-form" disabled
+              data-user-id="{{ user.id }}" />
+          </td>
+          <td>
+            <button type="submit" data-user-id="{{ user.id }}" form="delete-form">
+              Delete
+            </button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </main>
+
+  <dialog>
+    <form id="add-form" action="/users" method="POST">
+      {{ form.csrf_token }}
+
+      <div>
+        <h1>Sign up</h1>
+
+        <div class="form-group {% if form.name.errors %} invalid {% endif %}">
+          {{ form.name.label }}
+          {{ form.name() }}
+        </div>
+        {% if form.name.errors %}
+        <small>{{ form.name.errors[0] }} </small>
+        {% endif %}
+
+        <div class="form-group {% if form.email.errors %} invalid {% endif %}">
+          {{ form.email.label }}
+          {{ form.email() }}
+        </div>
+        {% if form.email.errors %}
+        <small>{{ form.email.errors[0] }} </small>
+        {% endif %}
+
+        <div class="form-group {% if form.address.errors %} invalid {% endif %}">
+          {{ form.address.label }}
+          {{ form.address() }}
+        </div>
+        {% if form.address.errors %}
+        <small>{{ form.address.errors[0] }} </small>
+        {% endif %}
+
+        <div class="form-group {% if form.username.errors %} invalid {% endif %}">
+          {{ form.username.label }}
+          {{ form.username() }}
+        </div>
+        {% if form.username.errors %}
+        <small>{{ form.username.errors[0] }} </small>
+        {% endif %}
+
+        <div class="form-group {% if form.password.errors %} invalid {% endif %}">
+          {{ form.password.label }}
+          {{ form.password() }}
+        </div>
+        {% if form.password.errors %}
+        <small>{{ form.password.errors[0] }} </small>
+        {% endif %}
+
+        <div class="button-group">
+          <button type="submit">Submit</button>
+          <button type="reset">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </dialog>
+
+  <form id="update-form" class="hidden" action="/users" method="POST">
+    <input type="hidden" name="_method" value="PATCH" />
+    <button type="submit" hidden></button>
+  </form>
+
+  <form id="delete-form" class="hidden" action="/users/" method="POST">
+    <input type="hidden" name="_method" value="DELETE" />
+  </form>
+
+  {% with messages = get_flashed_messages(with_categories=true) %} {% if
+  messages %}
+  <ul class="flashes floating disappearing">
+    {% for category, message in messages %}
+    <li class="flash {{ category }}">
+      {{ message }}
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %} {% endwith %}
+
+  <script>
+    const openDialogButton = document.getElementById("open-dialog-button")
+    const signOutButton = document.getElementById("signout-button")
+    const dialog = document.querySelector("dialog")
+    const addForm = document.getElementById("add-form")
+    const updateForm = document.getElementById("update-form");
+    const deleteForm = document.getElementById("delete-form");
+
+    openDialogButton.addEventListener("click", function (e) {
+      dialog.showModal()
+    })
+
+    signOutButton.addEventListener("click", function () {
+      location.href = '/signout'
+    })
+
+    addForm.addEventListener("reset", function () {
+      dialog.close()
+    })
+
+    updateForm.addEventListener("submit", function () {
+      console.log("asd");
+    });
+
+    deleteForm.addEventListener("submit", function (event) {
+      const userId = event.submitter.dataset.userId;
+      const isYes = confirm(`Delete User ID No. ${userId}? If you're deleting your own account, you will be signed out automatically.`);
+
+      if (!isYes) {
+        event.preventDefault();
+        return;
+      }
+
+      deleteForm.action = `/users/${userId}`;
+    });
+
+    document.querySelectorAll("tbody td").forEach((td) => {
+      const input = td.querySelector("input");
+
+      td.addEventListener("dblclick", function (event) {
+        this.classList.add("edit");
+        input.disabled = false;
+        input.focus();
+        input.selectionStart = input.selectionEnd = input.value.length;
+        updateForm.action = `/users/${input.dataset.userId}`;
+      });
+
+      td.querySelector("input")?.addEventListener("blur", function () {
+        td.classList.remove("edit");
+        input.disabled = true;
+        updateForm.reset();
+      });
+    });
+  </script>
+</body>
+
+</html>

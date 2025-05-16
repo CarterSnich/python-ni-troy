@@ -1,0 +1,60 @@
+form {
+  min-width: 360px;
+  border: 1px solid grey;
+  border-radius: 0.25rem;
+}
+
+form h1 {
+  margin: 0;
+  text-align: center;
+  margin-bottom: 0.75rem;
+}
+
+form > div {
+  padding: 1rem;
+  display: grid;
+  row-gap: 0.5rem;
+}
+
+form > div > small {
+  margin-top: -0.5rem;
+}
+
+form .form-group {
+  border: 1px solid grey;
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+
+  display: grid;
+  row-gap: 0.25rem;
+  transition: border ease-in-out 300ms;
+}
+
+form .form-group.invalid {
+  border-color: red !important;
+}
+
+form .form-group:focus-within,
+form .form-group:focus-within:focus-within {
+  border: 1px solid black;
+}
+
+form .form-group > label {
+  font-size: small;
+  /* font-weight: 600; */
+}
+
+form .form-group > input {
+  border: none;
+  outline: none;
+  font-size: large;
+}
+
+form .button-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+form .button-group > button {
+  flex: 1;
+}

@@ -4,18 +4,30 @@ from wtforms.validators import DataRequired
 import re
 
 
-def validate_password_format(form, field):
-    password = field.data
+def validate_email(value: str):
+    email_regex = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
+    if not re.match(email_regex, value):
+        raise ValueError("Invalid email format.")
+
+
+def check_password_format(password: str):
     if len(password) < 6:
-        raise ValidationError("Password must be at least 6 characters long.")
+        raise ValueError("Password must be at least 6 characters long.")
     if not re.search(r"[a-z]", password):
-        raise ValidationError("Password must include a lowercase letter.")
+        raise ValueError("Password must include a lowercase letter.")
     if not re.search(r"[A-Z]", password):
-        raise ValidationError("Password must include an uppercase letter.")
+        raise ValueError("Password must include an uppercase letter.")
     if not re.search(r"\d", password):
-        raise ValidationError("Password must include a digit.")
+        raise ValueError("Password must include a digit.")
     if not re.search(r'[!@#$%^&*()\-_=+{}\[\]:;"\'<>,.?/~`|\\]', password):
-        raise ValidationError("Password must include at least one symbol.")
+        raise ValueError("Password must include at least one symbol.")
+
+
+def validate_password_format(form, field):
+    try:
+        check_password_format(field.data)
+    except ValueError as e:
+        raise ValidationError(str(e))
 
 
 class SignUpForm(FlaskForm):
@@ -38,7 +50,6 @@ class SignInForm(FlaskForm):
     username = StringField(
         label="Username",
         id="username",
-        # render_kw={"autocomplete": "off"},
         validators=[DataRequired()],
     )
     password = PasswordField(
